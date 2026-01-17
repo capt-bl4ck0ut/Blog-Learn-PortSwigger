@@ -32,3 +32,11 @@ Ngay cả khi xâm nhập vào một tài khoản có quyền hạn thấp, kẻ
 > Mã trạng thái: Nếu một lần đoán trả về mã trạng thái khác, đây là dấu hiệu mạnh mẽ cho thấy tên người dùng là chính xác.
 > Thông báo lỗi, Thời gian phản hồi: 
 
+### Bảo vệ bằng vũ lực thô bạo có nhiều thiếu sót
+Để ngăn chặn các cuộc tấn công vét cạn là:
+> Khóa tài khoản mà người dùng từ xa đang cố gắng truy cập nếu họ đăng nhập không thành công quá nhiều lần
+> Chặn địa chỉ IP của người dùng từ xa nếu họ thực hiện quá nhiều lần đăng nhập liên tiếp trong thời gian ngắn
+Đôi khi thấy địa chỉ IP của mình bị chặn nếu đăng nhập không thành công quá nhiều lần. Trong một số hệ thống, bộ đếm số lần đăng nhập không thành công sẽ được đặt lại nếu chủ sỡ hữu IP đăng nhập thành công.
+Điều này kẻ tấn công chỉ cần đăng nhập vào tài khoản của chúng sau mỗi vài lần thử để tránh đạt đến giới hạn này.
+Bằng cách đó chúng ta chỉ cần chèn thông tin đăng nhập của kẻ tấn công vào danh sách khóa một cách đều đặn là đủ để khiến biện pháp phòng vệ gần như vô ích
+
