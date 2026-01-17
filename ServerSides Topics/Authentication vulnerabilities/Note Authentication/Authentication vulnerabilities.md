@@ -39,4 +39,6 @@ Ngay cả khi xâm nhập vào một tài khoản có quyền hạn thấp, kẻ
 Đôi khi thấy địa chỉ IP của mình bị chặn nếu đăng nhập không thành công quá nhiều lần. Trong một số hệ thống, bộ đếm số lần đăng nhập không thành công sẽ được đặt lại nếu chủ sỡ hữu IP đăng nhập thành công.
 Điều này kẻ tấn công chỉ cần đăng nhập vào tài khoản của chúng sau mỗi vài lần thử để tránh đạt đến giới hạn này.
 Bằng cách đó chúng ta chỉ cần chèn thông tin đăng nhập của kẻ tấn công vào danh sách khóa một cách đều đặn là đủ để khiến biện pháp phòng vệ gần như vô ích
+## Khóa tài khoản 
+Một trong số những cách mà trang web cố gắng ngăn chặn tấn công vét cạn mật khẩu là khóa tài khoản nếu đáp ứng kiểu như đăng nhập thất bại liên tiếp 
 
