@@ -20,6 +20,15 @@ Ngay cả khi xâm nhập vào một tài khoản có quyền hạn thấp, kẻ
 ## Chi tiết lỗ hổng
 ### Các lỗ hổng đăng nhập bằng mật khẩu
 > Tấn công bằng vũ lực: Tấn công vét cạn (Brute-Force attack) là khi kẻ tấn công sử dụng phương pháp thử và sai để đoán thông tin đăng nhập hợp lệ của người dùng. Tự động hóa bằng cách sử dụng danh sách từ gồm tên người dùng và mật khẩu.
-
-
+### Tấn công vét cạn tên người dùng
+> Tên người dùng mã dễ đoán nếu chúng tuân theo một mẫu dễ nhận biết, chẳng hạn như địa chỉ Email. Rất phổ biến khi thấy tên doanh nghiệp định dạng <first_name>.lastname@somecompany.com và đôi khi các tài khoản có quyền hạn cao hơn như Administrator chẳng hạn.
+### Tấn công vét cạn mật khẩu
+> Điều này thường việc bắt buộc sử dụng mật khẩu có:
+> Số lượng kí tự tối thiểu
+> Sự kết hợp giữa chữ hoa và chữ thường
+> Ít nhất một ký tự đặc biệt
+### Liệt kê tên người dùng
+> Kẻ tấn công có thể xem xét quá trình xem người dùng có thực sự hợp lệ hay không và đặc biệt chú ý đến bất kì sự khác biệt nào về:
+> Mã trạng thái: Nếu một lần đoán trả về mã trạng thái khác, đây là dấu hiệu mạnh mẽ cho thấy tên người dùng là chính xác.
+> Thông báo lỗi, Thời gian phản hồi: 
 
