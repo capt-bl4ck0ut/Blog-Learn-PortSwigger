@@ -41,3 +41,42 @@ Ngay cả khi xâm nhập vào một tài khoản có quyền hạn thấp, kẻ
 Bằng cách đó chúng ta chỉ cần chèn thông tin đăng nhập của kẻ tấn công vào danh sách khóa một cách đều đặn là đủ để khiến biện pháp phòng vệ gần như vô ích
 ## Khóa tài khoản 
 Một trong số những cách mà trang web cố gắng ngăn chặn tấn công vét cạn mật khẩu là khóa tài khoản nếu đáp ứng kiểu như đăng nhập thất bại liên tiếp 
+## Các lỗ hổng xác thực đa yếu tố
+### Vượt qua xác thực 2 yếu tố
+Đôi khi việc triển khai xác thực hai yếu tố bị lỗi đến mức có thể vượt qua hoàn toàn.
+Nếu người dùng được yêu cầu nhập mật khâu trước, rồi sau đó được yêu cầu nhập mã xác minh trên một trang riêng biệt, thì người dùng đã ở trạng thái "Đã đăng nhập" trước khi họ nhập mã xác minh.
+## Logic xác thực hai yếu tố bị lỗi
+Đôi khi, lỗi logic trong xác thực 2 yếu tố dẫn đến việc sau khi người dùng hoàn tất bước đăng nhập đầu tiên, trang web không xác minh đầy đủ rằng cùng một người dùng đang được thực hiện bước 2
+Ví dụ, người dùng đăng nhập bằng thông tin đăng nhập thông thường của họ ở bước đầu tiên như sau:
+```HTTP
+POST /login-steps/first HTTP/1.1
+Host: vulnerable-website.com
+...
+username=carlos&password=qwerty
+```
+Sau đó họ được cấp một cookie liên quan đến tài khoản của mình, trước khi chuyển sang bước thứ 2 của quá trình đăng nhập
+```HTTP
+HTTP/1.1 200 OK
+Set-Cookie: account=carlos
+
+GET /login-steps/second HTTP/1.1
+Cookie: account=carlos
+```
+Khi gửi mã xác minh, yêu cầu sử dụng cookie này để xác định người dùng đang cố gắng truy cập vào tài khoản nào
+```HTTP
+POST /login-steps/second HTTP/1.1
+Host: vulnerable-website.com
+Cookie: account=carlos
+...
+verification-code=123456
+```
+Kẻ tấn công có thể đăng nhập bằng thông tin đăng nhập của chính mình nhưng sau đó thay đổi giá trị của `account` cookie thành bất kỳ tên người dùng nào khi gửi mã xác minh
+```HTTP
+POST /login-steps/second HTTP/1.1
+Host: vulnerable-website.com
+Cookie: account=victim-user
+...
+verification-code=123456
+``
+
+
