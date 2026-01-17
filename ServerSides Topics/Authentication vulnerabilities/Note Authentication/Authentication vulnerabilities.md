@@ -41,4 +41,3 @@ Ngay cả khi xâm nhập vào một tài khoản có quyền hạn thấp, kẻ
 Bằng cách đó chúng ta chỉ cần chèn thông tin đăng nhập của kẻ tấn công vào danh sách khóa một cách đều đặn là đủ để khiến biện pháp phòng vệ gần như vô ích
 ## Khóa tài khoản 
 Một trong số những cách mà trang web cố gắng ngăn chặn tấn công vét cạn mật khẩu là khóa tài khoản nếu đáp ứng kiểu như đăng nhập thất bại liên tiếp 
-
