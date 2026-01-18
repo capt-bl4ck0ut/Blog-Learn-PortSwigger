@@ -25,7 +25,7 @@ pwned
 ```
 Lệnh được chèn vào echo đã được thực thi và chuỗi được cung cấp đã được hiển thị trong kết quả đầu ra.
 ## Các lệnh hữu ích
-![alt text](image.png)
+![alt text](./HinhAnh/image1.png)
 ## Các lỗ hổng tấn công chèn lệnh Blind OS
 Nhiều trường hợp tấn công chèn lệnh thực thi nhưng kết quả không được trả về response kết quả. 
 Bằng cách đó kẻ tấn công chèn lệnh hệ điều hành mù bằng cách sử dụng độ trễ thời gian
