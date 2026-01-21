@@ -33,3 +33,26 @@ Quá trình phát hiện và khai thác các điều kiện tranh chấp vượt
 Thử thách chính là căn chỉnh thời gian các yêu cầu sao cho ít nhất hai cửa sổ tranh chấp trùng khớp, gây ra va chạm. Cửa sổ này thường chỉ kéo dài vài mili giây và thậm chí có thể ngắn hơn nữa.
 Tấn công bằng gói tin đơn cho phép bạn loại bỏ hoàn toàn sự nhiễu loạn do độ trễ mạng bằng cách sử dụng một gói tin TCP duy nhất để thực hiện đồng thời 20-30 yêu cầu.
 ![alt text](./HinhAnh/image-3.png)
+## Phát hiện và khai thác các tình huống tranh chấp vượt quá giới hạn với Turbo Intruder
+Ngoài việc hỗ trợ trực tiếp tấn công bằng gói tin đơn trong Burp Repeater, chúng ta có thể sử dụng Turbo Intruder đễ hỗ trợ kỹ thuật này.
+> Công cụ Turbo Intruder phù hợp với các tấn công phức tạp hơn, chẳng hạn như cuộc tấn công yêu cầu nhiều lần thử lại, thời gian yêu cầu được phân bổ hợp lý hoặc số lượng yêu cầu cực kì lớn <br>
+Để sử dụng phương pháp tấn công gói tin đơn trong Turbo Intruder
+> 1. Hãy đảm bảo rằng mục tiêu hỗ trợ HTTP/2. Cuộc tấn công bằng gói tin đơn lẻ không tương thích với HTTP/1. <br>
+> 2. Thiết lập `engine=Engine.BURP2` các `concurentConnections=1` tùy chọn cấu hình cho công cụ yêu cầu <br>
+> 3. Khi xếp hàng yêu cầu, hãy nhóm chúng lại bằng cách gán chúng cho một cổng được đặt tên bằng cách sử dụng `gate` đối số cho `engine.queue()` phương thức <br>
+> 4. Để gửi tất cả các yêu cầu trong một nhóm nhất định, hãy mở cổng tương ứng bằng engine.openGate() phương pháp đã chọn. <br>
+
+```py
+def queueRequests(target, wordlists):
+    engine = RequestEngine(endpoint=target.endpoint,
+                            concurrentConnections=1,
+                            engine=Engine.BURP2
+                            )
+    
+    # queue 20 requests in gate '1'
+    for i in range(20):
+        engine.queue(target.req, gate='1')
+    
+    # send all requests in gate '1' in parallel
+    engine.openGate('1')
+```
