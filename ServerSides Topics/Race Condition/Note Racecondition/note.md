@@ -33,4 +33,3 @@ Quá trình phát hiện và khai thác các điều kiện tranh chấp vượt
 Thử thách chính là căn chỉnh thời gian các yêu cầu sao cho ít nhất hai cửa sổ tranh chấp trùng khớp, gây ra va chạm. Cửa sổ này thường chỉ kéo dài vài mili giây và thậm chí có thể ngắn hơn nữa.
 Tấn công bằng gói tin đơn cho phép bạn loại bỏ hoàn toàn sự nhiễu loạn do độ trễ mạng bằng cách sử dụng một gói tin TCP duy nhất để thực hiện đồng thời 20-30 yêu cầu.
 ![alt text](./HinhAnh/image-3.png)
-
