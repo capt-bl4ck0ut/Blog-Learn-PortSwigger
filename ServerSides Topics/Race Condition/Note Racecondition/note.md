@@ -56,3 +56,13 @@ def queueRequests(target, wordlists):
     # send all requests in gate '1' in parallel
     engine.openGate('1')
 ```
+## Chuỗi nhiều bước ẩn
+Một yêu cầu duy nhất có thể khởi động toàn bộ chuỗi nhiều bước ẩn đưa ứng dụng chuyển đổi qua nhiều trạng thái ẩn mà nso đi vào rồi lại thoát ra trước khi quá trình xử lý yêu cầu hoàn tất. `Trạng Thái Con`
+Nếu có thể xác định một hoặc nhiều yêu cầu HTTP gây ra tương tác với cùng một dữ liêụ có thể lợi dụng các trạng thái phụ này để khai thác các biến thể nhạy cảm về thời gian của các loại lỗi logic. Điều này cho phép khai thác tình trạng tranh chấp vượt xa cả việc vượt quá giới hạn.
+Đoạn mã sau đây minh họa cách một trang web có thể dễ bị tổn thưởng bởi một biến thể của cuộc tấn công này.
+```php
+session['userid'] = user.userid
+if user.mfa_enabled:
+session['enforce_mfa'] = True
+```
+Đây thực chất là một chuỗi nhiều bước ẩn diễn ra trong phạm vi một yêu cầu duy nhất. Quan trọng hơn, nó chuyển đổi qua một trạng thái phụ trong đs người dùng tạm thời có phiên đăng nhập hợp lệ, nhưng xác thực đa yếu tố (MFA) chưa được thực thi.
