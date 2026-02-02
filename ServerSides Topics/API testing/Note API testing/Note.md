@@ -118,3 +118,49 @@ Giao diện người dùng sẽ cố gắng truy cập URL sau:
 ```http
 GET /users/search?name=peter#foo&publicProfile=true
 ```
+Xem xét phản hồi để tìm manh mối về việc truy vấn có bị cắt ngắn hay không. Ví dụ nếu phản hồi trả về người dùng `peter` thì truy vấn phía máy chủ có thể đã bi cắt ngắn. Nếu `Invalid name` trả về thông báo lỗi, ứng dụng có thể đã coi `foo` là một phần tên người dùng. Điều này cho thấy rằng yêu cầu phía máy chủ có thể không bị cắt ngắn.
+Nếu có thể rút gọn yêu cầu phía máy chủ, điều này sẽ loại bỏ yêu cầu trường đó `publicProfile` phải được đặt thành true. Có thể tận dụng điều này để trả về các hồ sơ người dùng công khai.
+## Chèn các tham số không hợp lệ
+Có thể sử dụng ký tự được mã hóa URL `&` để thử thêm tham số thứ hai vào yêu cầu phía máy chủ.
+Có thể sửa đổi chuỗi truy vấn thành 
+```http
+GET /userSearch?name=peter%26foo=xyz&back=
+```
+Điều này dẫn đến yêu cầu phía máy chủ sau đây gửi đến API nội bộ:
+```http
+GET /users/search?name=peter&foo=xya&publicProfile=true
+```
+Nếu phản hồi không thay đổi, điều này có thể cho thấy tham số đã được chèn thành công nhưng bị ứng dụng bỏ qua.
+## Chèn các tham số hợp lệ
+Nếu có thể sửa đổi chuỗi truy vấn, chúng ta có thể thử thêm tham số hợp lệ thứ hai vào yêu cầu phía máy chủ.
+Nếu xác định được `email` tham số, có thể thêm nó vào chuỗi truy vấn như sau:
+```http
+GET /userSearch?name=peter%26email=foo&back=/home
+```
+Khi đó server máy chủ gửi đến API nội bộ
+```http
+GET /users/search?name=peter&email=foo&publicProfile=true
+```
+## Ghi đè các tham số hiện có
+Để xác nhận xem ứng dụng có dễ bị tấn công bằng cách thay đổi tham số phía máy chủ hay không, có thể thử ghi đè tham số gốc. Để thực hiện điều này bằng cách 
+Có thể sửa đôi chuỗi truy vấn thành như sau:
+```http
+GET /userSearch?name=peter%26name=carlos&back=/home
+```
+Điều này dẫn đên yêu cầu phía máy chủ gửi đến API nội bộ là
+```http
+GET /user/search?name=peter&name=carlos&publicProfile=true
+```
+API nội bộ diễn giải hai `name` tham số. Tác động điều này phụ thuộc vào cách ứng dụng xử lý tham số thứ hai. 
+> PHP chỉ phân tích tham số cuối cùng. Điều này sẽ dẫn đến việc người dùng tìm kiếm dấu chấm `carlos` <br>
+> ASP.Net kết hợp cả hai tham số. Điều này sẽ dẫn đến việc người dùng tìm kiếm `peter`, `carlos` và có thể dẫn đến `Invalid username` thông báo lỗi.<br>
+> Node.js / Express chỉ phân tích tham số đầu tiên . Điều này sẽ dẫn đến việc người dùng tìm kiếm `peter` nhưng kết quả vẫn không thay đổi <br>
+
+Nếu có thể ghi đè tham số gốc, có thể thực hiện một cuộc tấn công khai thác. Có thể thêm `name=administrator` vào yêu cầu. Điều này có thể cho phép đăng nhập với tư cách quản trị
+## Kiểm tra lỗi ô nhiễm tham số phía máy chủ trong các đường dẫn REST
+![alt text](image-1.png)
+Kẻ tấn công có thể thao túng các tham số đường dẫn URL phía máy chủ để khai thác API. Để kiểm tra lỗ hổng này bằng cách  thêm chuỗi tấn công duyệt thư mục để sửa đổi các tham số và quan sát cách ứng dụng phản hồi.
+![alt text](image-2.png)
+## Kiểm tra lỗi nhiễu tham số phía máy chủ trong các định dạng dữ liệu có cấu trúc
+![alt text](image-3.png)
+![alt text](image-4.png)
