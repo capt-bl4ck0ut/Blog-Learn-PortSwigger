@@ -75,4 +75,26 @@ Theo đặc tả JWS, chỉ có `alg` tham số tiêu đề là bắt buộc. Tu
 Đôi khi các máy chủ được cấu hình sai và sử dụng bất kỳ khóa nào được nhúng trong tham số `jwk`. <br>
 Có thể khai thác hành vi này bằng cách ký một JWT đã được sửa đổi bằng khóa riêng RSA riêng mình. Sau đó nhúng khóa công khai tương ứng vào `jwk` tiêu đề.
 ![alt text](image-3.png)
+## Chèn JWT tự ký thông qua tham số jku
+Thay vì nhúng trực tiếp khóa công khai bằng tham số `jwk` tiêu đề, một số máy chủ cho phép chúng ta sử dụng tham số tiêu đề `jku` (URL Bộ JWK) để tham chiếu đến một bọ JWK chứa khóa. Khi xác minh chữ ký, máy chủ sẽ lấy khóa liên quan dến URL này.
+> Bộ JWK: JWK Set là một đối tượng JSON chứa một mảng các JWK đại diện cho các khóa khác nhau. <br>
+```json
+{
+    "keys": [
+        {
+            "kty": "RSA",
+            "e": "AQAB",
+            "kid": "75d0ef47-af89-47a9-9061-7c02a610d5ab",
+            "n": "o-yy1wpYmffgXBxhAUJzHHocCuJolwDqql75ZWuCQ_cb33K2vh9mk6GPM9gNN4Y_qTVX67WhsN3JvaFYw-fhvsWQ"
+        },
+        {
+            "kty": "RSA",
+            "e": "AQAB",
+            "kid": "d8fDFo-fS9-faS14a9-ASf99sa-7c1Ad5abA",
+            "n": "fc3f-yy1wpYmffgXBxhAUJzHql79gNNQ_cb33HocCuJolwDqmk6GPM4Y_qTVX67WhsN3JvaFYw-dfg6DH-asAScw"
+        }
+    ]
+}
+```
+Các bộ JWK như thế đôi khi được công khai thông qua một điểm cuối tiêu chuẩn, chăng hjan như `./well-known/jwks.json`
 
