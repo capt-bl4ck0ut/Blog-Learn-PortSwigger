@@ -97,4 +97,16 @@ Thay vì nhúng trực tiếp khóa công khai bằng tham số `jwk` tiêu đ�
 }
 ```
 Các bộ JWK như thế đôi khi được công khai thông qua một điểm cuối tiêu chuẩn, chăng hjan như `./well-known/jwks.json`
+## Chèn JWT tự ký thông qua tham số kid
+Máy chủ có thể sử dụng nhiều khóa mã để ký các loại dữ liệu khác nhau, không chỉ riêng JWT. Vì lý do này, phần tiêu đề của JWT có thể chứa kid tham số (Key ID), giúp máy chủ xác định khóa nào cần sử dụng khi xác minh chữ ký
+Nếu tham số này cũng dễ bị tấn công bằng phương pháp duyệt thư mục, kẻ tấn công có thể buộc máy chủ sử dụng một tệp bất kỳ trong hệ thống làm khóa xác minh.
+```json
+{
+    "kid": "../../path/to/file",
+    "typ": "JWT",
+    "alg": "HS256",
+    "k": "asGsADas3421-dfh9DGN-AFDFDbasfd8-anfjkvc"
+}
+```
+Về mặt lý thuyết, bạn có thể làm điều này với bất kỳ tập tin nào, nhưng một trong những phương pháp đơn giản nhất là sử dụng `/dev/null` tập tin này, vốn có sẵn trên hầu hết các hệ thống Linux. 
 
