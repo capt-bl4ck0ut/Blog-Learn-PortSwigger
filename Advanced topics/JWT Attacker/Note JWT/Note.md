@@ -51,5 +51,10 @@ Hashcat ký phần tiêu đề và phần dữ liệu của JWT bằng cách s�
 <jwt>:<identified-secret>
 ```
 ## Chèn tham số tiêu đề JWT
-Theo đặc tả JWS, chỉ có `alg` tham số tiêu đề là bắt buộc. 
-> `JWK` (Khóa web JSON) - Cung cấp một đối tượng JSON đuộcc nhúng đại diện cho khóa.
+Theo đặc tả JWS, chỉ có `alg` tham số tiêu đề là bắt buộc. Tuy nhiên, trên thực tế, tiêu đề JWT (còn đượcc gọi là tiêu đề JOSE) thường chứa một tham số khác. <br>
+> jwk (khóa Web JSON) - Cung cấp một đối tượng JSON được nhúng đại diện cho khóa <br>
+> jku (URL bộ khóa web json): Cung cấp URL mà từ đó máy chủ có thể lấy một bộ khóa chứa khóa chính xác. <br>
+> kid (Mã định danh khóa) - Cung cấp mã định danh mà máy chủ có thể sử dụng để xác định khóa chính xác trong trường hợp có nhiều khóa để lựa chọn. <br>
+
+## Chèn JWT tự ký thông qua tham số JWK
+
