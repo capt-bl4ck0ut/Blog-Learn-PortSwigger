@@ -109,4 +109,8 @@ Nếu tham số này cũng dễ bị tấn công bằng phương pháp duyệt t
 }
 ```
 Về mặt lý thuyết, bạn có thể làm điều này với bất kỳ tập tin nào, nhưng một trong những phương pháp đơn giản nhất là sử dụng `/dev/null` tập tin này, vốn có sẵn trên hầu hết các hệ thống Linux. 
-
+## Cách phòng chống các cuộc tấn công JWT
+![alt text](image-4.png)
+![alt text](image-5.png)
+## Tấn công gây nhầm lẫn thuật toán
+Xem chi tiết . <a href="https://portswigger.net/web-security/jwt/algorithm-confusion">Tại đây</a>
