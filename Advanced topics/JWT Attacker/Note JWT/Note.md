@@ -114,3 +114,9 @@ Về mặt lý thuyết, bạn có thể làm điều này với bất kỳ tậ
 ![alt text](image-5.png)
 ## Tấn công gây nhầm lẫn thuật toán
 Xem chi tiết . <a href="https://portswigger.net/web-security/jwt/algorithm-confusion">Tại đây</a>
+## Thuật toán đối xứng so với thuật toán bất đỗi xứng
+JWT có thể được ký bằng nhiêu thuật toán khác nhau. Một số thuật toán, chẳng hạn như `HS256 (HMAC + SHA-256)` sử dụng khóa `đối xứng`. <br>
+Điều này có nghĩa là máy chủ sử dụng một khóa duy nhất vừa ký vừa xác minh mã thông báo.
+![alt text](image-6.png)
+VÀ ngược lại các thuật toán khác, chẳng hạn như `RS256 (RSA + SHA-256)` sủ dụng một cặp khóa `bất đối xứng`. Cặp khóa này bao gồm một khóa riêng tư mà máy chủ sử dụng để ký mã thông báo và một khóa công khai để xác minh chữ ký.
+![alt text](image-7.png)
