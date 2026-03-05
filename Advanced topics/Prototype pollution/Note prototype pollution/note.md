@@ -132,3 +132,20 @@ Việc sử dụng dấu ngoặc kép thoát trong tên máy chủ không hoàn 
 ```
 ## Ngăn ngừa lỗ hổng ô nhiễm tham số
 <a href="https://portswigger.net/web-security/prototype-pollution/preventing">Ngăn ngừa lỗ hổng</a>
+
+## Tìm kiếm thủ công các nguồn gây ô nhiễm nguyên mẫu phía máy khách
+. Quy trình các bước thử cơ bản như:
+1. Thử chèn các thuộc tính tùy ý thông qua chuỗi truy vấn, đoạn URL và baatf kỳ dữ liệu JSON
+```
+http://attacker.com?__proto__[foo]=bar
+```
+2. Trong bảng điều khiển có thể kiểm tra `Object.prototype` xem đã thành công việc thham chiếu đến đối tượng ô nhiễm hay chưa
+```txt
+Object.prototype.foo
+// "bar" indicates that you have successfully polluted the prototype
+// undefined indicates that the attack was not successful
+```
+3. Nếu thuộc tinshh đó chưa được thêm vào nguyên mẫu, hãy thử sử dụng kí tự chẳng hạn như chuyển đổi [] sang . để tham chiếu đối tượng hoặc ngược lại.
+```txt
+http://attacker.com?__proto__.foo=bar
+```
