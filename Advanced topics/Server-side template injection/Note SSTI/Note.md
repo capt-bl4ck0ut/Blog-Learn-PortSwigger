@@ -19,3 +19,4 @@ Cách tốt nhất để ngăn chặn việc chèn mẫu phía máy chủ là kh
 Một trong những cách đơn giản nhất để tránh các lỗ hổng tấn công chèn mẫu phía máy chủ là luôn sử dụng công cụ tạo mẫu "không có logic", chẳng hạn như Mustache, trừ khi thực sự cần thiết. Việc tách biệt logic khỏi phần trình bày càng nhiều càng tốt có thể làm giảm đáng kể nguy cơ bị tấn công dựa trên mẫu nguy hiểm nhất.
 Một biện pháp khác là chỉ thực thi mã của người dùng trong môi trường hộp cát, nơi các mô-đun và chức năng có khả năng gây nguy hiểm đã được loại bỏ hoàn toàn. Tuy nhiên, việc cách ly mã không đáng tin cậy vốn dĩ rất khó khăn và dễ bị vượt qua.
 Cuối cùng, một cách tiếp cận bổ sung khác là chấp nhận rằng việc thực thi mã tùy ý là điều gần như không thể tránh khỏi và áp dụng cơ chế bảo mật riêng bằng cách triển khai môi trường mẫu của bạn trong một container Docker được khóa chặt, chẳng hạn.
+SSTI 
