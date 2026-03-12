@@ -65,4 +65,53 @@ Theo tôi biết có tất cả `17 magic` và phổ biến PHP là `component()
 Warning
 If type declarations are used in the definition of a magic method, they must be identical to the signature described in this document. Otherwise, a fatal error is emitted. Prior to PHP 8.0.0, no diagnostic was emitted. However, __construct() and __destruct() must not declare a return type; otherwise a fatal error is emitted.
 ```
-Quan trọng một số ngôn ngữ có các phương thức đặc biệt tự động trong quá trình giải mã dữ liệu. `unserialize()`
+Quan trọng một số ngôn ngữ có các phương thức đặc biệt tự động trong quá trình giải mã dữ liệu. `unserialize()` phương thức của PHP tìm kiếm và gọi `__wakeup()` phương thức đặc biệt của một đối tượng. <br>
+Trong quá trình giải mã dữ liệu java, điều tương tự áp dụng cho `ObjectInputStream.readObject()` phương thức được sử dụng để đọc dữ liệu luồng byte ban đầu và thực hiện như một hàm tạo để khởi tạo lại. <br>
+Phương thức `Serializable` các lớp cũng có thể khai báo phương thức riêng của chúng `readObject()` <br>
+```java
+private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+{
+    // implementation
+}
+```
+## Công cụ được xây dựng sẵn 
+### ysoserial
+Một công cụ để giải mã dữ liệu Java là `ysoserial` cho phép chúng ta chọn một trong các chuỗi gadget được cung cấp cho thư viện mà cho rằng mục tiêu đang sử dụng, sau đó truyền vào lệnh chúng ta muốn thực thi.
+### Ghi chú quan trọng
+```
+Trong các phiên bản Java 16 trở lên, bạn cần thiết lập một loạt các đối số dòng lệnh để Java chạy ysoserial. Ví dụ:
+```
+```java
+java -jar ysoserial-all.jar \
+   --add-opens=java.xml/com.sun.org.apache.xalan.internal.xsltc.trax=ALL-UNNAMED \
+   --add-opens=java.xml/com.sun.org.apache.xalan.internal.xsltc.runtime=ALL-UNNAMED \
+   --add-opens=java.base/java.net=ALL-UNNAMED \
+   --add-opens=java.base/java.util=ALL-UNNAMED \
+   [payload] '[command]'
+```
+## Chuỗi tiện ích chung PHP
+Đôi khi các lỗ hổng thường xuyên gặp phải các lỗ hổng bảo mật trong quá trình giải mã dữ liệu. <br>
+Đối với các trang web dựa trên PHP, có thể sử dụng `PHPGCC (PHP Generic Gadget Chains)`.
+## Giải mã tệp PHAR
+Chúng ta chủ yêu xem xét việc khai thác các lỗ hổng giải mã dữ liệu (`Deserialization`) khi trang web thực hiện việc giải mã dữ liệu đầu vào của người dùng <br>
+Và trong PHP chúng ta có thể khai thác lỗ hổng giải mã dữ liệu ngay cả khi không có cách sử dụng nào `unserialize()`  <br>
+PHP cung cấp một số trình bao bọc kiểu URL mà chúng ta có thể sử dụng để xử lý các giao thức khác nhau và một trong số đó là tệp bao bọc `phar://` cung cấp giao diện để truy cập các tệp Archive (`.phar`). <br>
+> Theo tài liệu PHP nói như sau tệp manifest `PHAR` chứa siêu dữ liệu được tuần tự hóa. Nếu thực hiện bất kỳ thao tác hệ thống tệp nào trên `phar://` luồng dữ liệu, siêu dữ liệu này nó cói như trình giải mã dữ liệu tuần tự hóa <br>
+Các phương pháp hệ thống tệp tin rõ ràng là nguy hiểm như `include()` hay `fopen()` và tuy nhiên các phương pháp `file_exists()` không quá nguy hhiemer, có thể không được bảo vệ tốt. <br>
+Miễn là lớp của đối tượng được trang web hỗ trợ, cả hai `__wakeup()` hay `__destruct()`
+Giả sử: <br>
+Sử dụng `phar://` trình bao bọc, người ta có thể kích hoạt quá trình giải mã dữ liệu trên tệp được chỉ định `file_get_contents("phar://./archives/app.phar")` <br>
+Một PHAR hợp lệ bao gồm bốn yếu tố: <br>
+> 1. Đoạn mã mẫu (Stub): Đoạn mã mẫu là một khối mã PHP được thực thi khi tệp được truy cập trong ngữ cảnh thực thi. Tối thiểu, đoạn mã mẫu phải chứa một phần tử `__HALT_COMPILER(); <Phar>` ở cuối. Ngoài ra, không có hạn chế nào về nội dung của một đoạn mã mẫu Phar. <br>
+> 2. Manifest: Chứa siêu dữ liệu về kho lưu trữ và nội dung của nó. <br>
+> 3. File Contents: Chứa các tệp thực tế trong kho lưu trữ. <br>
+> 4. Signal: Để xác minh tính toàn vẹn của kho lưu trữ. <br>
+<br>
+
+Giả sử tạo Phar khai thác thủ thuật tùy chỉnh từ `PHPGenerate` <br>
+<a href="./phar.php">Mã Nguồn Ở Đây</a>
+
+## Ngăn ngừa lỗ hổng
+Nhìn chung, nên tránh việc giải mã dữ liệu đầu vào của người dùng trừ khi thực sự cần thiết. Mức độ nghiêm trọng của các lỗ hổng bảo mật mà phương pháp này có thể tạo điều kiện và khó khăn trong việc phòng chống chúng thường lớn hơn lợi ích mang lại trong nhiều trường hợp. <br>
+Nếu bạn cần giải mã dữ liệu từ các nguồn không đáng tin cậy, hãy áp dụng các biện pháp mạnh mẽ để đảm bảo dữ liệu không bị giả mạo. Ví dụ, bạn có thể triển khai chữ ký số để kiểm tra tính toàn vẹn của dữ liệu. Tuy nhiên, hãy nhớ rằng mọi kiểm tra phải được thực hiện trước khi bắt đầu quá trình giải mã. Nếu không, chúng sẽ không có nhiều tác dụng. <br>
+
