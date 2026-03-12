@@ -49,3 +49,20 @@ Giả sử so sánh giữa 1 số nguyên và chuỗi như sau:
 5 == "5"
 ```
 Lúc này `PHP 7.x` trở xuống phiên bản cũ nó có lỗ hổng chuyển đổi chuỗi thành 1 số nguyên có nghĩa `5=5 -> true`
+## Sử dụng chức năng của ứng dụng
+Đôi khi kiểm tra giá trị thuộc tính, chức năng của trang web cũng cs thể thực hiện được thao tác nguy hiểm trên dữ liệu từ một đối tượng đã được giải mã.
+Giả sử như chức năng xóa người dùng của trang web bằng cách truy cập đường dẫn tệp <br>
+```php
+$user->image_location
+```
+Nếu ảnh được tạo từ một đối tượng tuần tự hóa kẻ tấn công có thể khai thác lỗ hổng bằng cách truyền vào đối tượng sửa đổi và đặt đường dẫn `image_location` độc hại.
+## Phương pháp ma thuật
+Phương pháp ma thuật là một tập hợp con đặc biệt của các phương thức mà chúng ta không cần gọi rõ ràng <br>
+Các nhà phát triển có thể thêm các phương thức ma thuật vào lớp để xác định được trước đoạn mã nào sẽ được thực thi khi sự kiện xảy ra. <br>
+Theo tôi biết có tất cả `17 magic` và phổ biến PHP là `component()` `__constructor` được gọi bất cứ khi nào đối tượng của lớp được khởi tạo và `component()` của Python `__init__`. Thông thường các phương thức ma thuật như vậy sử dụng để khởi tạo các thuộc tính của đối tượng.
+![alt text](image-2.png)
+```text
+Warning
+If type declarations are used in the definition of a magic method, they must be identical to the signature described in this document. Otherwise, a fatal error is emitted. Prior to PHP 8.0.0, no diagnostic was emitted. However, __construct() and __destruct() must not declare a return type; otherwise a fatal error is emitted.
+```
+Quan trọng một số ngôn ngữ có các phương thức đặc biệt tự động trong quá trình giải mã dữ liệu. `unserialize()`
