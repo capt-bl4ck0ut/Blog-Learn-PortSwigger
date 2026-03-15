@@ -9,7 +9,7 @@ Nó hoạt động bằng cách thao túng một trang web dễ bị tổn thư�
 ![alt text](image.png)
 ## CHứng mình khả năng tấn công XSS
 Có thể xác nhận hầu hết các lỗ hhoonrg XSS bằng cách chèn một đoạn mã độc khiến trình duyệt thực thhi đoạn mã JS cơ bản đó là việc sử dụng `alert()` trở nên phổ biến hay sử dụng `print()` <br>
-## Các loại tấn công XSS 
+## Các loại tấn công XSS
 Có 3 loại XSS chính đó là:
 + `Reflected XSS`: Hay còn được gọi là XSS phản chiếu trong đó mã độc xuất phát từ yêu cầu HTTP hiện tại <br>
 + `Stored XSS`: Trong dđó mã độc được lấy từ cơ sở dữ liệu trang web <br>
@@ -28,7 +28,7 @@ https://insecure-website.com/status?message=<script>/*+Bad+stuff+here...+*/</scr
 Và lúc này người dùng truy cập vào URL do kẻ tấn công tạo ra, thì kịch bản sẽ được thực thi ra phía người dùng và tại thời điểm đó, kịch bản có thể thực hiện bất kỳ hành động nào và truy xuất bất kỳ dữ liệu nào mà người dùng có quyền truy cập.
 ## Stored Cross-Site Scripting
 Stored XSS là lỗ hổng XSS được lưu trữ thay như được thi ngay như Reflect lỗ hổng này pát sinh khi ứng dụng nhận dữ liệu từ một nguồn gốc đáng tin cầy và đưa dữ liệu đó vào các phản hồi HTTP sau đó một cách không an toàn <br>
-Dữ liệu được đề cập có thể được gửi đến ứng dụng thông qua các yêu cầu HTTP. Giả sử như sau tôi bình luận 1 trang mà trang đó có khả năng xảy ra XSS lúc này tôi đưua payload vào cmt nếu người sau vào trang đó sẽ khiến thực thi payload tôi. 
+Dữ liệu được đề cập có thể được gửi đến ứng dụng thông qua các yêu cầu HTTP. Giả sử như sau tôi bình luận 1 trang mà trang đó có khả năng xảy ra XSS lúc này tôi đưua payload vào cmt nếu người sau vào trang đó sẽ khiến thực thi payload tôi.
 ## Tấn công kịch bản chéo trang dựa trên DOM (DOM XSS)
 Lỗ hổng XSS dựa trên DOM phát sinh khi ứng dụng chứa một số mã Javascript phía máy khách xử lý dữ liệu từ một nguồn không đáng tin cậy. theo cách không an toàn và thường sẽ ghi dữ liệu trở lại DOM <br>
 Ví dụ
@@ -40,7 +40,7 @@ results.innerHTML = "You Are Search: " + search
 Nếu kẻ tấn công có thể kiểm soát giá trị của trường nhập liệu, chúng có thể dễ dàng tạo ra một giá trị độc hại khiến kịch bản của chúng được thực thi:
 You Are Search: <img src=1 onerror='/* Bad stuff here... */'>
 ## Mục đich XSS
-Kẻ tấn công có thể khai thascc XSS 
+Kẻ tấn công có thể khai thascc XSS
 > Giả mạo hoặc mạo danh người dùng là nạn nhân. <br>
 > Thực hiện bất kỳ hành động nào mà người dùng có khả năng thực hiện. <br>
 > Thu thập thông tin người dùng <br>
@@ -66,7 +66,7 @@ XSS là loại đặc thù phổ biến rất khó để có thể được dữ
 3. <b>XSS và CSRF khác nhau như thế nào ?</b>
 XSS liên quan đến việc khiến trang web trả về mã JavaScript độc hại, trong khi CSRF liên quan đến việc dụ dỗ người dùng nạn nhân thực hiện các hành động mà họ không có ý định thực hiện.
 4. <b>XSS và SQL Injection khác nhau như thế nào?</b>
-- Đối vs XSS về bản chất nó là nơi ở Client còn SQL Injection là phía back-end người dùng hay còn gọi XSS nhắm vào người dùng ứng dụng còn SQL Injection nhắm vào dữ liệu database bên trong 
+- Đối vs XSS về bản chất nó là nơi ở Client còn SQL Injection là phía back-end người dùng hay còn gọi XSS nhắm vào người dùng ứng dụng còn SQL Injection nhắm vào dữ liệu database bên trong
 5. <b>Làm thế nào để ngăn chặn XSS trong PHP?</b>
 Lọc đầu vào bằng danh sách trắng các ký tự được cho phép và sử dụng gợi ý kiểu hoặc ép kiểu. Mã hóa đầu ra bằng ` htmlentities<script>` ENT_QUOTEScho ngữ cảnh HTML hoặc mã hóa Unicode của JavaScript cho ngữ cảnh JavaScript.
 6. <b>Làm thế nào để ngăn chặn XSS trong Java?</b>
@@ -85,11 +85,11 @@ Nếu kẻ tấn công có thể kiểm soát một đoạn mã được thực 
 2. <b>Sự khác biệt giữa Reflect XSS và Self XSS</b>
 - Self XSS liên quan đến hành vi ứng dụng tự như Reflect XSS thông thường, tuy nhiên nó không tự kích hoạt thẳng ngay thông qua URL được tạo sẵn hoặc yêu cầu liên miền. <br>
 - Thay vào đó, lỗ hổng chỉ được kích hoạt nếu chính nạn nhân gửi mã độc XSS từ trình duyệt của họ. Việc thực hiện một cuộc tấn công XSS tự thân thường liên quan đến việc sử dụng kỹ thuật xã hội để dụ nạn nhân dán một số dữ liệu do kẻ tấn công cung cấp vào trình duyệt của họ. Do đó, nó thường được coi là một vấn đề nhỏ, ít ảnh hưởng.
-## Tác động của cuộc tấn công XSS lưu trữ 
+## Tác động của cuộc tấn công XSS lưu trữ
 Nếu kẻ tấn công có thể kiểm soát một đoạn mã được thực thi trong trình duyệt của nạn nhân, thì chúng thường có thể xâm phạm hoàn toàn người dùng đó. Kẻ tấn công có thể thực hiện bất kỳ hành động nào áp dụng cho tác động của lỗ hổng XSS phản xạ .
 ## XSS dựa trên DOM
 Các lỗ ổng XSS dựa trên DOM thường phát sinh khi Javascript lấy dữ liệu từ một nguồn do kẻ tấn công kiểm soát chẳng hạn như URL và tiến hành chuyển nó đến một đích thực thi mã động như `eval()` hay `innerHTML`. Điều này cho phép ke tấn công thực thi javascript độc hại. <br>
-Nguồn gốc phổ biến nhất của lỗ hổng DOM XSS là URL thường truy cập bằng `window.location`. Kẻ tấn công có thể tạo một liên kết để dẫn nạn nhân đến một trang dễ bị tổn thương với mã độc trong chuỗi truy vấn và các phần bị phân mảnh của URL. 
+Nguồn gốc phổ biến nhất của lỗ hổng DOM XSS là URL thường truy cập bằng `window.location`. Kẻ tấn công có thể tạo một liên kết để dẫn nạn nhân đến một trang dễ bị tổn thương với mã độc trong chuỗi truy vấn và các phần bị phân mảnh của URL.
 ### Kiểm tra các bộ lọc HTML
 Để kiểm tra lỗ hổng DOM XSS trong mã HTML đích chèn một chuỗi ký tự chữ và số ngẫu nhiên vào `location.search`
 ### Khai thác lỗ hổng DOM XSS với nhiều nguồn và đích khác nhau
@@ -111,9 +111,9 @@ $(function() {
 });
 ```
 Kẻ tấn công có thể khai thác lỗ hổng này bằng cách sửa đổi URL sao cho `location.search` nguồn chứa URL Javascript độc hại. Sau khi Javascript đượcc load vào thuộc tính của liên kết quay lại `href` và nhấp vào liên kết đó sẽ thực thi. <br>
-## Hàm Selector của jQuery 
+## Hàm Selector của jQuery
 Có thể sử dụng để chèn các đối tượng độc hại vào DOM. `jQuery` cực kì nổi tiếng các trang web có thể xảy ra XSS do sử dụng bộ chọn kết hợp với mã `location.hash` cho tự động cuoojcn đến một phần tử cụ thể trên trang. <br>
-Hành vi này thường được thực hiện bằng cách sử đụng `hashchange` 
+Hành vi này thường được thực hiện bằng cách sử đụng `hashchange`
 ```js
 $(window).on('hashchange', function() {
 	var element = $(location.hash);
@@ -124,7 +124,7 @@ $(window).on('hashchange', function() {
 ```js
 <iframe src="https://vulnerable-website.com#" onload="this.src+='<img src=1 onerror=alert(1)>'">
 ```
-Trong ví dụ này, `src` thuộc tính trỏ đến trang dễ bị tổn thương với giá trị băm rỗng. Khi trang `iframe` được tải, một vectơ XSS được thêm vào giá trị băm, khiến sự `hashchange` kiện được kích hoạt. 
+Trong ví dụ này, `src` thuộc tính trỏ đến trang dễ bị tổn thương với giá trị băm rỗng. Khi trang `iframe` được tải, một vectơ XSS được thêm vào giá trị băm, khiến sự `hashchange` kiện được kích hoạt.
 ## Một số loại sink có thể dẫn đến lỗ hổng DOM-XSS?
 ```js
 document.write()
@@ -157,4 +157,36 @@ init()
 index()
 jQuery.parseHTML()
 $.parseHTML()
-``
+```
+Payload như sau về ngữ cảnh chặn dấu ngoặc kép
+```js
+" autofocus onfocus=alert(document.cookie) x="
+```
+Đoạn mã này tạo ra một sự kiện `onfocus` thực thi Javascript khi phần tử nhận được tiêu điểm, đồng thời thêm `autofocus` để tuộc tính cố gắng kích hoạt `onfocus` sự khiện mà không cần tương tác người dùng <br>
+## Thoát khỏi chuỗi Javascript
+Một số chuỗi
+```js
+'-alert(document.domain)-'
+';alert(document.đomain)//
+```
+## Kỹ thuật BYPASS WAF
+Một số trang web làm cho việc tấn công XSS được chặn bằng `WAF`. Trong trường hợp này có thể thử nghiệm các cách khác để gọi các hàm nhằm vượt qua các biện pháp bảo mật này. <br>
+Một cách để làm điều này sử dụng lệnh `throw` với trình xử lý ngoại lệ. Điều này cho phép truyền các đối số cho một hàm mà không cần sử dụng dấu ngoặc đơn. <br>
+Đoạn mã sau gán `alert()` hàm cho trình xử lý ngoại lệ toàn cục và `throw` câu lệnh truyền đối số cho `1` trình xử lý ngoại lệ (trong trường hợp này là alert). Kết quả cuối cùng là `alert()` hàm được gọi với `1` đối số là. <br>
+```js
+onerror=alert;throw 1
+<script>onerror=alert;throw 1337</script>
+<script>{onerror=alert}throw 1337</script>
+```
+## Sử dụng mã hóa HTML
+Khi trình duyệt phân tích các thẻ HTML và thuộc tính trong phản hồi nó sẽ thực hiện giải mã HTML
+```js
+<a href="#" onclick="... var input='controllable data here'; ...">
+```
+Nếu ứng dụng chặn hoặc thoát các ký tự dấu ngoặc đơn, bạn có thể sử dụng đoạn mã sau để thoát khỏi chuỗi JavaScript và thực thi tập lệnh của riêng mình:
+```js
+&apos;-alert(document.domain)-&apos;
+```
+`&apos` là thực thể HTML đại diện cho dấu nháy đơn.
+
+
