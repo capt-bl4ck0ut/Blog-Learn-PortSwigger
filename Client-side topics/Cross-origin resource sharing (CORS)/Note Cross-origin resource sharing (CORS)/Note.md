@@ -1,0 +1,1 @@
+# Note Cross-origin resource sharing (CORS)
