@@ -188,5 +188,39 @@ Nếu ứng dụng chặn hoặc thoát các ký tự dấu ngoặc đơn, bạn
 &apos;-alert(document.domain)-&apos;
 ```
 `&apos` là thực thể HTML đại diện cho dấu nháy đơn.
-
+## Khai thác các lỗ hổng kịch bản chéo trang (XSS) để đánh cắp cookie
+Đánh cắp cookie là một phương pháp truyền thống để khai thác lỗ hổng XSS. Hầu hết các ứng dụng web đều sử dụng cookie để quản lý phiên <br>
+Có thể `fetch` cookie nạn nhân đến host của mình, sau đó tự tay chèn cookie vào trình duyệt và mạo danh nạn nhân <br>
+Phương pháp này có thể bị hạn chế <br>
+> Nhiều ứng dụng ẩn cookie của chúng khỏi JavaScript bằng cách sử dụng `HttpOnly` cờ này. <br>
+> Phiên làm việc có thể hết hạn trước khi bạn kịp chiếm quyền kiểm soát. <br>
+## Chính sách bảo mật nội dung
+Liên quan về `CSP`
+## CSP là gì?
+Là cơ chế bảo mật trình duyệt nhằm mục đích giảm thiểu các cuộc tấn công XSS và một số cuộc tấn công khác. Nó hoạt động bằng cách hạn chế các tài nguyên bên ngoài có thể được tải <br>
+Để kíc hoạt CSP phản hồi bao gồm tiêu đề HTTP `Content-Security-Policy` với giá trị chứa danh sách được phân tách bằng dấu chấm phẩy <br>
+## Giảm thiểu các cuộc tấn công XSS bằng cách sử đụng CSP
+Chỉ thị sau đây sẽ cho phép tải các tập lệnh từ nguồn gốc với trang đó:
+```js
+script-src: 'self'
+```
+Giả sử:
+```
+http://attacker.com/example/
+http://attacker.com/example2/
+```
+Chỉ thị sau đây sẽ chỉ cho phép tải các tập lệnh từ một tên miền cụ thể:
+```js
+script-src https://scripts.normal-website.com
+```
+Ngoài việc cho phép các tên miền cụ thể, chính sách bảo mật nội dung còn cung cấp hai cách khác để xác định các tài nguyên đáng tin cậy: `nonce` và `hash`:
+> `nonce`: Chỉ thị CSP có thể chỉ định một nonce (một giá trị ngẫu nhiên) và giá trị đó phải được sử dụng giống nhau trong thẻ tải script. Nếu các giá trị không khớp, script sẽ không được thực thi. Để có hiệu quả như một biện pháp kiểm soát, nonce phải được tạo ra một cách an toàn mỗi khi trang được tải và không thể đoán được bởi kẻ tấn công. <br>
+> `hash`: Chỉ thị CSP có thể quy định mã băm của nội dung tập lệnh đáng tin cậy. Nếu mã băm của tập lệnh thực tế không khớp với giá trị được chỉ định trong chỉ thị, thì tập lệnh sẽ không được thực thi. Nếu nội dung của tập lệnh thay đổi, tất nhiên bạn cần cập nhật giá trị mã băm được chỉ định trong chỉ thị. <br>
+Việc một nhà cung cấp dịch vụ đám mây (CSP) chặn các tài nguyên như vậy khá phổ biến `script`. Tuy nhiên, nhiều CSP cho phép yêu cầu hình ảnh. Điều này có nghĩa là bạn thường có thể sử dụng `img` các phần tử để thực hiện yêu cầu đến các máy chủ bên ngoài nhằm tiết lộ mã thông báo CSRF, chẳng hạn.
+## Chỉ thị cho phép tải hình ảnh từ cùng nguồn gốc
+```js
+img-src 'self'
+```
+## Vượt qua CSP bằng cách tiêm chính sách
+![alt text](image-2.png)
 
